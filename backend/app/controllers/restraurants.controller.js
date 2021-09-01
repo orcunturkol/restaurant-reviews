@@ -4,7 +4,6 @@ const Restaurant = db.restaurants;
     exports.findAll = (req, res) => {
         Restaurant.find()
           .then(data => {
-              console.log("I'm in");
             res.send(data);
           })
           .catch(err => {

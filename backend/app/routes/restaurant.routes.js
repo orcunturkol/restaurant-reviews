@@ -5,6 +5,5 @@ module.exports = app => {
   
     // Retrieve all restaurants
     router.get("/", restaurants.findAll);
-  
     app.use('/api/restaurants', router);
   };
