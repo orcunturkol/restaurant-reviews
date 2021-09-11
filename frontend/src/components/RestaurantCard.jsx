@@ -27,6 +27,22 @@ const retrieveRestaurtans =  () => {
     })
 }
 
+function deleteRestaurant (id, index)  {
+  console.log("Got called");
+  RestaurantDataService.deleteOne(id)
+  .then(response=>{
+    setRestaurants((prevState)=>{
+      prevState.splice(index, 1)
+      return({
+        ...prevState
+      })
+    })
+  })
+  .catch(e => {
+    console.log(e);
+  })
+}
+
 //Get current restaurants
 const indexOfLastPost = currentPage * restaurantsPerPage;
 const indexOfFirstPost = indexOfLastPost - restaurantsPerPage;
@@ -39,7 +55,22 @@ return(
   :
   <div>
   <div className="row">
-     <RestaurantsList restaurants={currentPosts} />
+    
+  {
+  currentPosts.map((restaurant,index) => (
+            <div className="col-sm-6 col-md-4 p-40">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title" key={restaurant.id}>{restaurant.name}</h5>
+                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <button onClick={deleteRestaurant(restaurant.id, index)}type="button" class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </div> 
+    )
+        )
+        }
+          
   </div>
   <div className="p-40">  
       <Pagination
