@@ -26,17 +26,13 @@ const retrieveRestaurtans =  () => {
         console.log(e);
     })
 }
-
-function deleteRestaurant (id, index)  {
-  console.log("Got called");
+const refreshList = () => {
+  retrieveRestaurtans();
+}
+const deleteRestaurant = (id, index) => {
   RestaurantDataService.deleteOne(id)
   .then(response=>{
-    setRestaurants((prevState)=>{
-      prevState.splice(index, 1)
-      return({
-        ...prevState
-      })
-    })
+    refreshList();
   })
   .catch(e => {
     console.log(e);
@@ -46,7 +42,7 @@ function deleteRestaurant (id, index)  {
 //Get current restaurants
 const indexOfLastPost = currentPage * restaurantsPerPage;
 const indexOfFirstPost = indexOfLastPost - restaurantsPerPage;
-const currentPosts = restaurants.slice(indexOfFirstPost, indexOfLastPost);
+const currentPosts= restaurants.slice(indexOfFirstPost, indexOfLastPost);
 
 //Change Page
 const paginate = pageNumber => setCurrentPage(pageNumber);
@@ -63,7 +59,7 @@ return(
               <div className="card-body">
                 <h5 className="card-title" key={restaurant.id}>{restaurant.name}</h5>
                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <button onClick={deleteRestaurant(restaurant.id, index)}type="button" class="btn btn-danger">Delete</button>
+                <button onClick={()=>deleteRestaurant(restaurant.id, index)}type="button" class="btn btn-danger">Delete</button>
               </div>
             </div>
           </div> 
